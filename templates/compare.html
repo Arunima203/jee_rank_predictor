@@ -1,0 +1,128 @@
+<!DOCTYPE html><html>
+<head>
+    <title>College Comparison</title><style>
+    body{
+        background:#0f172a;
+        color:white;
+        font-family:Arial,sans-serif;
+        padding:30px;
+    }
+
+    h1{
+        text-align:center;
+        margin-bottom:30px;
+    }
+
+    .comparison-container{
+        display:flex;
+        gap:20px;
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .college-card{
+        background:#1e293b;
+        border-radius:15px;
+        padding:20px;
+        width:300px;
+        box-shadow:0 0 10px rgba(255,255,255,.1);
+    }
+
+    .college-card h2{
+        font-size:20px;
+        margin-bottom:15px;
+    }
+
+    .college-card p{
+        margin:10px 0;
+    }
+
+    .safe{
+        color:#22c55e;
+        font-weight:bold;
+    }
+
+    .medium{
+        color:#facc15;
+        font-weight:bold;
+    }
+
+    .low{
+        color:#ef4444;
+        font-weight:bold;
+    }
+</style>
+
+</head><body><h1>College Comparison</h1><div class="comparison-container"
+     id="comparison-container">
+</div><script>
+
+const colleges =
+JSON.parse(localStorage.getItem("compare_colleges")) || [];
+
+if(colleges.length === 0){
+
+    document.getElementById(
+        "comparison-container"
+    ).innerHTML =
+    "<h2>Details Not Found</h2>";
+
+}
+else{
+
+    let html = "";
+
+    colleges.forEach(c=>{
+
+        let margin = c.closing - c.rank;
+
+        let chance = "Low";
+        let cls = "low";
+
+        if(margin > 3000){
+            chance = "SAFE";
+            cls = "safe";
+        }
+        else if(margin > 1000){
+            chance = "MEDIUM";
+            cls = "medium";
+        }
+
+        html += `
+        <div class="college-card">
+
+            <h2>${c.institute}</h2>
+
+            <p><b>Program:</b>
+            ${c.program}</p>
+
+            <p><b>Quota:</b>
+            ${c.quota}</p>
+
+            <p><b>Opening Rank:</b>
+            ${c.opening}</p>
+
+            <p><b>Closing Rank:</b>
+            ${c.closing}</p>
+
+            <p><b>Safety Margin:</b>
+            ${margin}</p>
+
+            <p>
+                <b>Admission Chance:</b>
+                <span class="${cls}">
+                ${chance}
+                </span>
+            </p>
+
+        </div>
+        `;
+    });
+
+    document.getElementById(
+        "comparison-container"
+    ).innerHTML = html;
+}
+
+</script></body>
+</html>
