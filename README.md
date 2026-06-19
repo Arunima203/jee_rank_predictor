@@ -1,8 +1,8 @@
-JEE Smart College Advisor
+# JEE Smart College Advisor
 
 An intelligent JEE college prediction portal built using FastAPI.
 
-Features
+## Features
 
 - JEE Advanced and JEE Main prediction
 - Gender-based filtering
@@ -15,7 +15,7 @@ Features
 - College Comparison Feature
 - Admission Chance Analysis
 
-Tech Stack
+## Tech Stack
 
 - FastAPI
 - Pandas
@@ -25,25 +25,19 @@ Tech Stack
 - CSS
 - JavaScript
 
-Dataset
+## Live Demo
+
+https://jee-rank-predictor-6jwn.onrender.com
+
+## Dataset
 
 JEE 2025 Official Cutoff Dataset
 
 Source:
 https://github.com/atmabodha/OpenNLP/blob/main/IIT-JEE/JEE_2025_Cutoffs.xlsx
 
-Run Locally
+## Run Locally
 
+```bash
 pip install -r requirements.txt
 uvicorn main:app --reload
-
-Open:
-
-http://127.0.0.1:8000
-
-Future Improvements
-
-- Match Score Recommendation
-- Branch Ranking System
-- AI-based Career Suggestions
-- Better Analytics Dashboard
