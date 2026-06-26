@@ -1,9 +1,5 @@
 # JEE Smart College Advisor
 
-An intelligent JEE college prediction portal built using FastAPI.
-
-# JEE Smart College Advisor
-
 ## Preview
 
 ![Project Screenshot](screenshot.png)
