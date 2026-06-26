@@ -2,6 +2,14 @@
 
 An intelligent JEE college prediction portal built using FastAPI.
 
+# JEE Smart College Advisor
+
+## Preview
+
+![Project Screenshot](screenshot.png)
+
+An intelligent JEE college prediction portal built using FastAPI.
+
 ## Features
 
 - JEE Advanced and JEE Main prediction
