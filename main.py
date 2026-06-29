@@ -19,10 +19,12 @@ def load_jee_data():
         print("GitHub file try to loaded...")
         response = requests.get(github_raw_url)
         df = pd.read_excel(io.BytesIO(response.content), engine='openpyxl')
+        
 
         df['Opening Rank'] = pd.to_numeric(df['Opening Rank'], errors='coerce')
         df['Closing Rank'] = pd.to_numeric(df['Closing Rank'], errors='coerce')
         df = df.dropna(subset=['Opening Rank', 'Closing Rank'])
+        
 
         df_global = df
         print(df.columns.tolist())
@@ -30,12 +32,11 @@ def load_jee_data():
     except Exception as e:
         print("Error loading data:", e)
 
-# ডাটা লোড করা শুরু
+
 load_jee_data()
 
 @app.get("/")
 def home(request: Request):
-    # হোম পেজ লোড করার সময় context-এ অবশ্যই request পাঠাতে হবে
     return templates.TemplateResponse(request=request,
     name="index.html")
 
@@ -54,9 +55,11 @@ def predict(
     print("Rank =", rank)
     print("Quota =", quota)
     global df_global
+    
 
     if df_global is None:
         return templates.TemplateResponse("result.html", {"request": request, "error": "Data not loaded yet. Please restart server."})
+    
 
     if gender == "Female":
         gender_filter = "Female-only (including Supernumerary)"
@@ -82,6 +85,7 @@ def predict(
                 na=False
              )
         ]
+        
 
     try:
 
@@ -116,6 +120,7 @@ def predict(
 
         filtered_df = institute_filter[condition]
         filtered_df = filtered_df.sort_values(by='Closing Rank').head(20)
+        
         guidance = ""
 
         if interest == "Coding":
@@ -130,12 +135,13 @@ def predict(
         colleges_list = []
         for _, row in filtered_df.iterrows():
 
+            opening_rank = int(row['Opening Rank'])
             closing_rank = int(row['Closing Rank'])
             margin = closing_rank - rank
 
-            if margin > 3000:
+            if rank <= opening_rank:
                 chance = "High"
-            elif margin >1000:
+            elif rank <= closing_rank:
                 chance = "Medium"
             else:
                 chance = "Low"
@@ -149,6 +155,7 @@ def predict(
                 "margin" : margin,
                 "chance" : chance 
             })
+        
 
         return templates.TemplateResponse(
             request=request,
@@ -164,6 +171,7 @@ def predict(
         )
     except Exception as e:
        print("ERROR:" , e)
+       
 
        return templates.TemplateResponse(
            request=request,

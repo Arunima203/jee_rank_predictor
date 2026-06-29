@@ -38,7 +38,7 @@
     }
 
     .safe{
-        color:#22c55e;
+        color:#129341;
         font-weight:bold;
     }
 
@@ -79,14 +79,17 @@ else{
         let chance = "Low";
         let cls = "low";
 
-        if(margin > 3000){
+        if(c.rank <= c.opening){
             chance = "SAFE";
             cls = "safe";
         }
-        else if(margin > 1000){
+        else if(c.rank <= c.closing){
             chance = "MEDIUM";
             cls = "medium";
         }
+        else
+            chance = "LOW";
+            cls = "low";
 
         html += `
         <div class="college-card">
@@ -124,5 +127,20 @@ else{
     ).innerHTML = html;
 }
 
-</script></body>
+</script>
+<div style="text-align:center; margin-top:30px;">
+    <button onclick="window.history.back()"
+        style="
+        padding:12px 24px;
+        background:#8b5cf6;
+        color:white;
+        border:none;
+        border-radius:10px;
+        cursor:pointer;
+        font-size:16px;
+        font-weight:bold;">
+        ← Back to Results
+    </button>
+</div>
+</body>
 </html>
